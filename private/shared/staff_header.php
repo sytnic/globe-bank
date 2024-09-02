@@ -11,7 +11,7 @@
   </head>
 
   <body>    
-  <header>
+    <header>
       <h1>GBI Staff Area</h1>
     </header>
 
