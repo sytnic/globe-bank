@@ -1,33 +1,25 @@
 <?php require_once('../../../private/initialize.php'); ?>
-<?php
 
-// классический вариант проверки наличия значения
-/*
-if(isset($_GET['id'])) {
-    $id = $_GET['id'];
-} else {
-    $id = '1';
-}
-*/
+<?php
 
 // 2 вариант - тернарный оператор
 // $id = isset($_GET['id']) ? $_GET['id'] : '1';  // for PHP < 7.0
 
 // 3 вариант - оператор нулевого слияния
 $id = $_GET['id'] ?? '1';  // for PHP > 7.0
-
 ?>
 
-<?php $page_title = 'Show Subject'; ?>
+<?php $page_title = 'Show Page'; ?>
 <?php include(SHARED_PATH.'/staff_header.php');  ?>
 
 <div id="content">
 
-    <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php') ?>">&laquo; Back to List</a>
+<a class="back-link" href="<?php echo url_for('/staff/pages/index.php') ?>">&laquo; Back to List</a>
+<br>
 
-    <div class="subject show">
+    <div class="page show">
 
-    Subject ID: <?php echo h($id); ?>
+    Page ID: <?php echo h($id); ?>
 
     </div>
 
