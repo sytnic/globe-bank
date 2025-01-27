@@ -1,4 +1,6 @@
 <?php
+  ob_start(); // output buffering is turned on
+// Включена буферизация вывода независимо от значения в php.ini
 
 // Assign file paths to PHP constants
 // __FILE__ returns the current path to this file
@@ -6,16 +8,27 @@
 
 define("PRIVATE_PATH", dirname(__FILE__));        
 // путь к папке private,
-// определяется через место расположения текущего файла initialize.php  
+// определяется через место расположения текущего файла initialize.php,
+// т.к. срабатывает при вызове
+// require_once('../../private/initialize.php'); 
+//
 // echo PRIVATE_PATH; 
 // E:\OSpanel\5.4\domains\globe-bank\private
 
-define("PROJECT_PATH", dirname(PRIVATE_PATH));    // путь к корню проекта
+define("PROJECT_PATH", dirname(PRIVATE_PATH));    
+// путь к корню проекта
+// определяет папку выше по отношению к файлу initialize.php
+//
 // echo PROJECT_PATH; 
 // E:\OSpanel\5.4\domains\globe-bank
 
-define("PUBLIC_PATH", PROJECT_PATH . '/public');  // /public
-define("SHARED_PATH", PRIVATE_PATH . '/shared');  // /private/shared
+define("PUBLIC_PATH", PROJECT_PATH . '/public');  
+// /public
+// определяет папку public, вложенную в корень проекта
+
+define("SHARED_PATH", PRIVATE_PATH . '/shared');  
+// /private/shared
+// определяет папку shared, вложенную в папку private
 
 
 // Assign the root URL to a PHP constant
