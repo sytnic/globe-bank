@@ -2,15 +2,32 @@
 
 require_once('../../../private/initialize.php');
 
-$test = $_GET['test'] ?? '';
-
-if($test == '404') {
-  error_404();
-} elseif($test == '500') {
-  error_500();
-} elseif($test == 'redirect') {
+// Если не было параметров запроса (url?id=...), 
+// т.е. GET пустой,
+// то редирект
+if(!isset($_GET['id'])) {
   redirect_to(url_for('/staff/subjects/index.php'));
 }
+$id = $_GET['id'];
+
+$menu_name = '';
+$position = '';
+$visible = '';
+
+// Если была post-отправка, то обработка значений
+if (is_post_request()) {
+  // Handle form values sent by new.php
+  
+      $menu_name = $_POST['menu_name'] ?? '';
+      $position = $_POST['position'] ?? '';
+      $visible = $_POST['visible'] ?? '';
+  
+      echo "Form parameters<br />";
+      echo "Menu name: " . $menu_name . "<br />";
+      echo "Position: " . $position . "<br />";
+      echo "Visible: " . $visible . "<br />";
+  }
+
 ?>
 
 <?php $page_title = 'Edit Subject'; ?>
@@ -23,10 +40,10 @@ if($test == '404') {
   <div class="subject edit">
     <h1>Edit Subject</h1>
 
-    <form action="" method="post">
+    <form action="<?php echo url_for('/staff/subjects/edit.php?id='.h(u($id))); ?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="" /></dd>
+        <dd><input type="text" name="menu_name" value="<?php echo $menu_name; ?>" /></dd>
       </dl>
       <dl>
         <dt>Position</dt>
