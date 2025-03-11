@@ -2,9 +2,7 @@
 
 <?php
 
-  $sql = "SELECT * FROM subjects";
-  $sql.= " ORDER BY position ASC";
-  $subject_set = mysqli_query($db, $sql);
+  $subject_set = find_all_subjects();
 
   $subjects = [
     ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
