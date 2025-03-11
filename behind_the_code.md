@@ -155,4 +155,54 @@ $mysqli->close
 
 https://www.php.net/manual/ru/mysqlinfo.api.choosing.php
 
+## 033-Connect to MySQL with PHP
+
+PHP Database Interaction:
+
+
+1. Create a database connection.
+2. Perform a database query.
+3. Use the returned data (if any).
+4. Release the returned data.
+5. Close the database connection.
+
+1 и 5 шаги выполняются однократно во время исполнения скрипта. Остальные шаги могут выполняться многократно.    
+
+Функции открытия и закрытия соединения с БД:  
+
+```php
+mysqli_connect($host, $user, $password, $database)
+mysqli_close($connection)
+```
+
+db_connect_guide.php
+
+```php
+<?php
+
+// This guide demonstrates the five fundamental steps
+// of database interaction using PHP.
+
+// Credentials
+$dbhost = '';
+$dbuser = '';
+$dbpass = '';
+$dbname = '';
+
+// 1. Create a database connection
+$connection = mysqli_connect($dbhost, $dbuser, $dbpass, $dbname);
+
+// 2. Perform database query
+
+// 3. Use returned data (if any)
+
+// 4. Release returned data
+
+// 5. Close database connection
+mysqli_close($connection);
+
+?>
+
+```
+
 ##

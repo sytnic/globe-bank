@@ -52,5 +52,10 @@ define("WWW_ROOT", $doc_root);
 //   /public
 
 require_once('functions.php');
+require_once('database.php');
+
+// вызвана функция из database.php
+// и установлено соединение с БД
+$db = db_connect();
 
 ?>

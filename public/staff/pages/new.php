@@ -55,7 +55,7 @@ if (is_post_request()) {
         </dd>
       </dl>
       <div id="operations">
-        <input type="submit" value="Edit Subject" />
+        <input type="submit" value="Create Page" />
       </div>
     </form>
 
