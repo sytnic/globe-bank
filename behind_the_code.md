@@ -114,4 +114,45 @@ SELECT * FROM pages WHERE subject_id=2 AND visible=1;
 
 ```
 
----
+## 032-Database APIs in PHP
+
+Три API для подключения к MySQL:
+
+- mysql
+- mysqli (i - improved)
+- PDO (PHP data objects)
+
+Разница между ними:
+
+<img src="img_learn/diff_api.jpg" alt="drawing" width="600"/>
+
+Схожесть процедурных и ООП функций:
+
+```
+Procedural
+
+mysqli_connect 
+mysqli_connect_errno 
+mysqli_connect_error 
+mysqli_real_escape_string
+mysqli_query
+mysqli_fetch_assoc
+mysqli_close
+
+
+Object Oriented
+
+$mysqli = new mysqli 
+$mysqli->connect_errno 
+$mysqli->connect_error
+$mysqli->real_escape_string
+$mysqli->query
+$mysqli->fetch_assoc 
+$mysqli->close
+```
+
+Дополнительная информация:  
+
+https://www.php.net/manual/ru/mysqlinfo.api.choosing.php
+
+##
