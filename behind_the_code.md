@@ -205,4 +205,19 @@ mysqli_close($connection);
 
 ```
 
-##
+## 034-Retrieve data
+
+Функции запроса к БД и отпускания (высвобождения) данных:  
+
+```php
+// $connection - соединение с БД
+// $query - SQL запрос
+mysqli_query($connection, $query);
+// Высвобождение набора результатов
+mysqli_free_result($result_set);
+```
+
+Набор результатов ($result_set) получается по итогу работы запроса SELECT.  
+CREATE, UPDATE, DELETE возвращают не набор результатов, а TRUE или FALSE.  
+
+## 

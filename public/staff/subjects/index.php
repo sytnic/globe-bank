@@ -1,6 +1,11 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
 <?php
+
+  $sql = "SELECT * FROM subjects";
+  $sql.= " ORDER BY position ASC";
+  $subject_set = mysqli_query($db, $sql);
+
   $subjects = [
     ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
     ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Consumer'],
@@ -43,6 +48,10 @@
           </tr>
           <?php } ?>
         </table>
+
+        <?php
+          mysqli_free_result($subject_set);
+        ?>
 
     </div>
   </div>
