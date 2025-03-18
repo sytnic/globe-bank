@@ -220,4 +220,22 @@ mysqli_free_result($result_set);
 Набор результатов ($result_set) получается по итогу работы запроса SELECT.  
 CREATE, UPDATE, DELETE возвращают не набор результатов, а TRUE или FALSE.  
 
+## 035-Work with retrieved data
+
+Функции запроса данных  
+
+- mysqli_fetch_assoc()
+
+  Запрашивает данные как обычный массив
+
+- mysqli_fetch_assoc()
+
+  Запрашивает данные как ассоциативный массив
+
+- mysqli_fetch_array()
+
+  Запрашивает данные в оба типа массива. Или может получить константу в качестве аргумента, чтобы передать запрашиваемый вид массива: MYSQL_NUM, MYSQL_ASSOC, MYSQL_BOTH. 
+
 ## 
+
+
