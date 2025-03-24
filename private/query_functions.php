@@ -24,6 +24,32 @@ function find_subject_by_id($id) {
     return $subject; // return an assoc. array
 }
 
+function insert_subject($menu_name, $position, $visible) {
+    global $db;
+
+    $sql = "INSERT INTO subjects";
+    $sql.= " (menu_name, position, visible)";
+    $sql.= " VALUES (";
+    $sql.= "'".$menu_name."',";
+    $sql.= "'".$position."',";
+    $sql.= "'".$visible."'";
+    $sql.= ")";
+
+    $result = mysqli_query($db, $sql);
+    // For INSERT, $result is true/false.
+    // Для всех запросов, кроме SELECT, возвращается true/false.
+    // Для SELECT - результирующий набор.
+    if($result) {
+        return true;
+    } else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+
+}
+
 function find_all_pages() {
     global $db;
     
