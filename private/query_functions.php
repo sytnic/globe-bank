@@ -10,6 +10,17 @@ function find_all_subjects() {
     return $result_set;
 }
 
+function find_subject_by_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM subjects";
+    $sql.= " WHERE id='".$id."'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+
+    return $result;
+}
+
 function find_all_pages() {
     global $db;
     
