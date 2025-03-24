@@ -16,10 +16,7 @@ if(isset($_GET['id'])) {
 // 3 вариант - оператор нулевого слияния
 $id = $_GET['id'] ?? '1';  // for PHP > 7.0
 
-$result = find_subject_by_id($id);
-
-$subject = mysqli_fetch_assoc($result);
-mysqli_free_result($result);
+$subject = find_subject_by_id($id);
 
 ?>
 
