@@ -2,6 +2,7 @@
 
 require_once('../../../private/initialize.php');
 
+/* тестирование больше не нужно
 $test = $_GET['test'] ?? '';
 
 if($test == '404') {
@@ -11,6 +12,8 @@ if($test == '404') {
 } elseif($test == 'redirect') {
   redirect_to(url_for('/staff/subjects/index.php'));
 }
+*/
+
 ?>
 
 <?php $page_title = 'Create Subject'; ?>
