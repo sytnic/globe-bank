@@ -10,5 +10,15 @@ function find_all_subjects() {
     return $result_set;
 }
 
+function find_all_pages() {
+    global $db;
+    
+    $sql = "SELECT * FROM pages";
+    $sql.= " ORDER BY subject_id ASC, position ASC";
+    $result_set = mysqli_query($db, $sql);
+    confirm_result_set($result_set);
+    return $result_set;
+}
+
 
 ?>
