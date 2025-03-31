@@ -10,6 +10,8 @@ if(!isset($_GET['id'])) {
 }
 $id = $_GET['id'];
 
+$subject = find_subject_by_id($id);
+
 $menu_name = '';
 $position = '';
 $visible = '';
@@ -43,14 +45,14 @@ if (is_post_request()) {
     <form action="<?php echo url_for('/staff/subjects/edit.php?id='.h(u($id))); ?>" method="post">
       <dl>
         <dt>Menu Name</dt>
-        <dd><input type="text" name="menu_name" value="<?php echo h($menu_name); ?>" /></dd>
+        <dd><input type="text" name="menu_name" value="<?php echo h($subject['menu_name']); ?>" /></dd>
       </dl>
       <dl>
         <dt>Position</dt>
         <dd>
           <select name="position">
             <option value="1" 
-            <?php if ($position == 1){echo " selected"; } ?>
+            <?php if ($subject['position'] == 1){echo " selected"; } ?>
             >1</option>
           </select>
         </dd>
@@ -59,7 +61,7 @@ if (is_post_request()) {
         <dt>Visible</dt>
         <dd>
           <input type="hidden" name="visible" value="0" />
-          <input type="checkbox" name="visible" value="1" <?php if ($visible == 1){echo "checked"; } ?> />
+          <input type="checkbox" name="visible" value="1" <?php if ($subject['visible'] == 1){echo "checked"; } ?> />
         </dd>
       </dl>
       <div id="operations">
