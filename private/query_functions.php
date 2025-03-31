@@ -50,6 +50,36 @@ function insert_subject($menu_name, $position, $visible) {
 
 }
 
+/**
+ * Обновит запись в БД
+ *
+ * @param array $subject
+ * @return true|error 
+ */
+function update_subject($subject) {
+    global $db;
+
+    $sql = "UPDATE subjects SET";
+    $sql.= " menu_name='".$subject['menu_name'] ."',";
+    $sql.= " position='".$subject['position'] ."',";
+    $sql.= " visible='".$subject['visible'] ."'";
+    $sql.= " WHERE id='".$subject['id']."' ";
+    $sql.= " LIMIT 1";
+  
+    $result = mysqli_query($db, $sql);
+    // For UPDATE $result is true/false
+    if($result) {
+      // redirect_to(url_for('/staff/subjects/show.php?id='.$id));
+      // вместо редиректа вернём true
+      return true;
+    } else {
+      // Update failed
+      echo mysqli_error($db);
+      db_dissonnect($db);
+      exit;
+    }
+}
+
 function find_all_pages() {
     global $db;
     

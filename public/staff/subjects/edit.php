@@ -16,31 +16,18 @@ if (is_post_request()) {
   // Handle form values sent by new.php
 
   $subject = [];
-  
+  $subject['id'] = $id;
   $subject['menu_name'] = $_POST['menu_name'] ?? '';
   $subject['position'] = $_POST['position'] ?? '';
   $subject['visible'] = $_POST['visible'] ?? '';
-  
-  $sql = "UPDATE subjects SET";
-  $sql.= " menu_name='".$subject['menu_name'] ."',";
-  $sql.= " position='".$subject['position'] ."',";
-  $sql.= " visible='".$subject['visible'] ."'";
-  $sql.= " WHERE id='".$id."' ";
-  $sql.= " LIMIT 1";
 
-  $result = mysqli_query($db, $sql);
-  // For UPDATE $result is true/false
-  if($result) {
-    redirect_to(url_for('/staff/subjects/show.php?id='.$id));
-  } else {
-    // Update failed
-    echo mysqli_error($db);
-    db_dissonnect($db);
-    exit;
-  }
-  
+  $result = update_subject($subject);
+  redirect_to(url_for('/staff/subjects/show.php?id='.$id));
+
 } else {
-
+  // эта строка используется для заполнения формы
+  // только во время гет-запроса,
+  // поэтому она здесь
   $subject = find_subject_by_id($id);
 }
 
