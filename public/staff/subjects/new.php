@@ -14,6 +14,16 @@ if($test == '404') {
 }
 */
 
+  // выяснить количество строк в таблице БД
+  $subject_set = find_all_subjects();
+  // и прибавить 1
+  // для возможности выбора нового места для новой позиции 
+  // (на 1 больше от уже существующих)
+  $subject_count = mysqli_num_rows($subject_set) + 1;
+  mysqli_free_result($subject_set);
+
+  $subject = [];
+  $subject["position"] = $subject_count;
 ?>
 
 <?php $page_title = 'Create Subject'; ?>
@@ -34,8 +44,20 @@ if($test == '404') {
       <dl>
         <dt>Position</dt>
         <dd>
-          <select name="position">
-            <option value="1">1</option>
+        <select name="position">
+          <!-- не вычисляемое динамически option          
+            <option value="1">1</option>          
+          -->
+          <!-- вычисляемое динамически option  -->
+          <?php 
+            for($i=1; $i <= $subject_count; $i++) {
+              echo "<option value=\"{$i}\"";
+              if($subject["position"] == $i) {
+                echo " selected";
+              }
+              echo ">{$i}</option>";
+            }
+          ?>
           </select>
         </dd>
       </dl>
