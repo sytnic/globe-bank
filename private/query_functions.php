@@ -1,5 +1,12 @@
 <?php
 
+// Subjects
+
+/**
+ * Получает набор всех тем из таблицы subjects БД 
+ * 
+ * @return mysqli_result|bool
+ */
 function find_all_subjects() {
     global $db;
     
@@ -10,6 +17,13 @@ function find_all_subjects() {
     return $result_set;
 }
 
+/**
+ * Получает ассоциативный массив одной записи
+ * темы из БД по её id
+ *
+ * @param string $id
+ * @return array
+ */
 function find_subject_by_id($id) {
     global $db;
 
@@ -25,7 +39,7 @@ function find_subject_by_id($id) {
 }
 
 /**
- * Вставит запись в БД
+ * Вставит запись темы в БД
  *
  * @param array $subject
  * @return true|error 
@@ -57,7 +71,7 @@ function insert_subject($subject) {
 }
 
 /**
- * Обновит запись в БД
+ * Обновит запись темы в БД
  *
  * @param array $subject
  * @return true|error 
@@ -87,7 +101,7 @@ function update_subject($subject) {
 }
 
 /**
- * Удалит запись в БД
+ * Удалит запись темы в БД
  *
  * @param string $id
  * @return true|error 
@@ -113,6 +127,14 @@ function delete_subject($id) {
     }
 }
 
+
+// Pages
+
+/**
+ * Получает набор всех записей из таблицы pages БД 
+ * 
+ * @return mysqli_result|bool
+ */
 function find_all_pages() {
     global $db;
     
@@ -121,6 +143,113 @@ function find_all_pages() {
     $result_set = mysqli_query($db, $sql);
     confirm_result_set($result_set);
     return $result_set;
+}
+
+
+/**
+ * Получает ассоциативный массив одной записи 
+ * страницы из БД по её id
+ *
+ * @param string $id
+ * @return array 
+ */
+function find_page_by_id($id) {
+    global $db;
+
+    $sql = "SELECT * FROM pages";
+    $sql.= " WHERE id='".$id."'";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $page = mysqli_fetch_assoc($result);
+    mysqli_free_result($result);
+    return $page; // returns an assoc. array
+}
+
+/**
+ * Вставляет в БД запись о новой странице
+ *
+ * @param array $page
+ * @return true|error  
+ */
+function insert_page($page) {
+    global $db;
+
+    $sql = "INSERT INTO pages";
+    $sql.= " (subject_id, menu_name, position, visible, content)";
+    $sql.= " VALUES (";
+    $sql.= "'".$page['subject_id']."', ";
+    $sql.= "'".$page['menu_name']."', ";
+    $sql.= "'".$page['position']."', ";
+    $sql.= "'".$page['visible']."', ";
+    $sql.= "'".$page['content']."'";
+    $sql.= ")";
+
+    $result = mysqli_query($db, $sql);
+    // For INSERT statements, $result is true/false
+    if($result) {
+        return true;
+    } else {
+        // INSERT failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+/**
+ * Обновляет запись о странице в БД
+ *
+ * @param array $page 
+ * @return true|error  
+ */
+function update_page($page) {
+    global $db;
+
+    $sql = "UPDATE pages SET";
+    $sql.= " subject_id='".$page['subject_id']."', ";
+    $sql.= " menu_name='".$page['menu_name']."', ";
+    $sql.= " position='".$page['position']."', ";
+    $sql.= " visible='".$page['visible']."', ";
+    $sql.= " content='".$page['content']."' ";
+    $sql.= " WHERE id='".$page['id']."' ";
+    $sql.= " LIMIT 1";    
+
+    $result = mysqli_query($db, $sql);
+    // For UPDATE statements, $result is true/false
+    if($result) {
+        return true;
+    } else {
+        // UPDATE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+}
+
+/**
+ * Удаляет запись о странице в БД
+ *
+ * @param string $id 
+ * @return true|error  
+ */
+function delete_page($id) {
+    global $db;
+
+    $sql = "DELETE FROM pages ";
+    $sql.= " WHERE id='".$id."'";
+    $sql.= " LIMIT 1";
+    
+    $result = mysqli_query($db, $sql);
+    // For DELETE statements, $result is true/false
+    if($result) {
+        return true;
+    } else {
+        // DELETE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+    }
+
 }
 
 
