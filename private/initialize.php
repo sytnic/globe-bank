@@ -59,5 +59,7 @@ require_once('validation_functions.php');
 // вызвана функция из database.php
 // и установлено соединение с БД
 $db = db_connect();
+// сразу инициализируем массив для ошибок
+$errors = [];
 
 ?>
