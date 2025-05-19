@@ -63,6 +63,7 @@ LIMIT 1;  -- не обязательный лимит, но хорошая пр�
 
 ## 028-Populate a MySQL table
 
+```sql
     INSERT INTO subjects (id, menu_name, position, visible) VALUES (1, 'About Globe Bank', 1, 1) ;
 
     INSERT INTO subjects (menu_name, position, visible) VALUES ('Consumer', 2, 1) ;
@@ -70,6 +71,7 @@ LIMIT 1;  -- не обязательный лимит, но хорошая пр�
     INSERT INTO subjects (menu_name, position, visible) VALUES ('Small Business', 3, 1) ;
 
     UPDATE subjects SET visible='0' WHERE id=3 ;
+```
 
 ## 029-Relational database tables
 
@@ -131,24 +133,24 @@ SELECT * FROM pages WHERE subject_id=2 AND visible=1;
 ```
 Procedural
 
-mysqli_connect 
-mysqli_connect_errno 
-mysqli_connect_error 
-mysqli_real_escape_string
-mysqli_query
-mysqli_fetch_assoc
-mysqli_close
+    mysqli_connect 
+    mysqli_connect_errno 
+    mysqli_connect_error 
+    mysqli_real_escape_string
+    mysqli_query
+    mysqli_fetch_assoc
+    mysqli_close
 
 
 Object Oriented
 
-$mysqli = new mysqli 
-$mysqli->connect_errno 
-$mysqli->connect_error
-$mysqli->real_escape_string
-$mysqli->query
-$mysqli->fetch_assoc 
-$mysqli->close
+    $mysqli = new mysqli 
+    $mysqli->connect_errno 
+    $mysqli->connect_error
+    $mysqli->real_escape_string
+    $mysqli->query
+    $mysqli->fetch_assoc 
+    $mysqli->close
 ```
 
 Дополнительная информация:  
@@ -244,6 +246,60 @@ CREATE, UPDATE, DELETE возвращают не набор результато
 
 - mysqli_connect_error()
 
-## 
+## 049-Problems with validation logic
 
+Возвращают true:  
+
+    0 == FALSE  
+    4 == TRUE  
+    0 == NULL  
+    0 == "0"  
+    0 == ""  
+    0 =="a"  
+    "" == NULL  
+
+    "abc" == TRUE  
+    100 == 100.00  
+    3 == "3 dogs"  
+    "1" == "01"  
+    "123" == "  123"  
+    "123" == "+0123"  
+    100 == "1e2"  
+
+Результат жонглирования типами:
+
+    echo 0 == FALSE? 'true' : 'false';   // true  
+    echo 0 === FALSE? 'true': 'false';   // false  
+
+Еще пример:
+
+```php
+
+function has_string($value, $required_string) { 
+    return strpos($value, $required_string) !== false;
+}
+
+strpos('abcde', 'a')
+// 0
+
+strpos('abcde', 'a') == false
+// true
+
+strpos('abcde', 'a') === false
+// false
+
+```
+
+> Пустое. Функция Empty:
+
+Возвращают true:  
+
+    ""  
+    0  
+    "0"  
+    null  
+    false  
+    array()  
+
+## 
 
