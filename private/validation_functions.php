@@ -132,4 +132,62 @@
     return preg_match($email_regex, $value) === 1;
   }
 
+  // has_unique_page_menu_name('History')
+  // * Validates uniqueness of pages.menu_name
+  // * For new records, provide only the menu_name.
+  // * For existing records, provide current ID as second arugment
+  //   has_unique_page_menu_name('History', 4)
+
+  // Проверяет уникальность названия страницы в таблице pages.menu_name.
+  // Для новых записей укажите только menu_name.
+  // has_unique_page_menu_name('History')
+  // Для существующих записей укажите текущий идентификатор в качестве второго аргумента.
+  // has_unique_page_menu_name('History', 4)
+  
+  /**
+   * Уникально ли имя меню
+   * 
+   * @return boolean
+   */
+  function has_unique_page_menu_name($menu_name, $current_id="0") {
+    global $db;
+
+    $sql = "SELECT * FROM pages";
+    $sql.= " WHERE menu_name='" . $menu_name . "'";
+    $sql.= " AND id != '" . $current_id . "'";
+
+    $page_set = mysqli_query($db, $sql);
+    $page_count = mysqli_num_rows($page_set);
+    mysqli_free_result($page_set);
+
+    return ($page_count === 0);
+
+    // Запрос выглядит так:
+    // SELECT * FROM pages
+    // WHERE menu_name= 'History'
+    // AND id != 2;
+
+    // При подставлении существующей записи с её правильным подставленным id (AND id !=2) (во время edit) будет возвращено 0 строк.
+    // И функция вернёт истину, $page_count равен нулю.
+    // В дальнейшем используется 
+    // if(!has_unique) если(истинно ли то, что не-истина),
+    // нет, не записывать ошибки, пропустить, не делать ничего.
+    // Ошибок нет. Таким образом, разрешено редактировать существующую запись.
+
+    // При подставлении существующей записи с подставленным по умолчанию id !=0 (во время insert) будет возвращена 1 строка.
+    // И функция вернёт ложь, $page_count не равен нулю.
+    // В дальнейшем используется 
+    // if(!has_unique) если(истинно ли то, что не-ложь), 
+    // да, записать ошибки в массив $errorrs[] = "..."
+    // Будут ошибки. Таким образом, запрещено создать такую же запись.
+
+    // При подставлении несуществующей записи с подставленным по умолчанию id !=0 (во время insert) будет возвращено 0 строк.
+    // И функция вернёт истину, $page_count равен нулю.
+    // В дальнейшем используется 
+    // if(!has_unique) если(истинно ли то, что не-истина),
+    // нет, не записывать ошибки, пропустить, не делать ничего.
+    // Ошибок нет. Таким образом, разрешено создать новую запись.
+
+  }
+
 ?>
