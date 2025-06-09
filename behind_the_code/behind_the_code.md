@@ -301,5 +301,18 @@ strpos('abcde', 'a') === false
     false  
     array()  
 
+## 052-Understand SQL injection
+
+SQLi (SQL injection) занимает первое место в рейтинге уязвимостей проекта Open Web Application Security Project (OWASP) - Проект по безопасности открытых веб приложений.  
+
+## 053-Sanitize data for SQL
+
+Для защиты от SQLi могут быть использованы функции
+
+- `addslashes($string)` - может использоваться вне подключения к БД
+- `mysqli_real_escape_string($db, $string)` - всегда используется с подключением к БД, разработано специально под MySQL.
+
 ## 
+
+
 
