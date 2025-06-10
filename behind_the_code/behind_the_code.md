@@ -312,7 +312,72 @@ SQLi (SQL injection) занимает первое место в рейтинг�
 - `addslashes($string)` - может использоваться вне подключения к БД
 - `mysqli_real_escape_string($db, $string)` - всегда используется с подключением к БД, разработано специально под MySQL.
 
-## 
+## 054-Delimit data values
 
+Желательно всегда ставить одинарные кавычки вокруг значений, посылаемых в запросах SQL, в том числе вокруг чисел. Это предотвращает SQL инъекции.  
 
+Объясняющий пример:
 
+```php
+$sql = "SELECT * subjects";
+$sql.= "WHERE id=".db_escape($db, $id);
+
+$id = "1; DROP TABLE payments";
+
+// "SELECT * FROM subjects WHERE id=1; DROP TABLE payments"
+```
+
+Есть также  способ защиты вместо одинарных кавычек, когда преобразовывается тип значения:
+
+```php
+$sql = "SELECT * subjects"; 
+$sql.= "WHERE id=".(int)$id;
+
+$id = "1; DROP TABLE payments";
+
+//"SELECT * FROM subjects WHERE id=1"
+```
+
+Но в этом случае производится много лишних действий, уменьшающих производительность.  
+В SQL запросах всегда обрабатываются строки, даже если мы посылаем туда числа. БД сама их преобразовывает в нужный тип на лету.   
+В данном случае строка (из url или формы) принудительно превращается в число (в PHP), затем в БД посылается число, но БД преобразовывает число в строку (т.к. всегда использует строки), а затем, на лету, преобразовывает эту строку в нужный тип.  
+
+## 055-Prepared statements
+
+Подготовленные запросы полностью исключают SQL инъекции и позволяют не экранировать значения.
+
+Как выглядит SQL в подготовленных запросах:
+
+```sql
+INSERT INTO subjects
+    (menu_name, position, visible)
+VALUES 
+    (?, ?, ?)
+```
+
+Пример подготовленного запроса:
+
+```php
+$sql = "SELECT id, first_name, last_name";
+$sql.= "FROM users ";
+$sql.= "WHERE username = ? AND password = ?";
+
+/* создание подготавливаемого запроса */
+$stmt = mysqli_prepare($connection, $sql);
+/* связывание параметров с метками */
+// 'ss' указывает, что $username и $password являются строками
+mysqli_stmt_bind_param($stmt, 'ss', $username, $password);
+/* выполнение запроса */
+mysqli_stmt_execute($stmt);
+/* связывание переменных с результатами запроса */
+mysqli_stmt_bind_result($stmt, $id, $first_name, $last_name);
+/* получение значения */
+mysqli_stmt_fetch($stmt);
+
+mysqli_stmt_close($stmt);
+
+```
+
+https://www.php.net/manual/ru/mysqli.prepare.php
+
+---
